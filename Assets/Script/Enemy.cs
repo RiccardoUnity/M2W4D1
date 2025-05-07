@@ -1,82 +1,40 @@
 using UnityEngine;
-using static UnityEngine.Rendering.DebugUI;
 
 public class Enemy
 {
-    public bool debug;
-
-    private string nome;
-    private int vita;
-    private int vitaDefault = 100;
-    private int livello;
-    private int attaccoBase;
+    private string nome = "EnemyDefault";
+    private int vita = 100;
+    private int livello = 1;
+    private int attaccoBase = 5;
 
     public Enemy Inizializza(string nome, int vita, int livello)
     {
-        if (debug)
-            Debug.Log("Inizio Enemy - Inizializza");
-
         //Setto nome
         this.nome = nome;
-        if (debug)
-            Debug.Log($"Nome nemico assegnato - {nome}");
 
         //Setto vita
-        if (vita < 0)
-        {
-            this.vita = Mathf.Abs(vita);
-            Debug.LogWarning("La vita non può essere negativa, verrà tolto il segno meno");
-        }
-        else if (vita == 0)
-        {
-            this.vita = vitaDefault;
-            Debug.LogWarning($"Vita di {nome} settato di default {this.vita}");
-        }
-        else
+        if (vita > 0)
         {
             this.vita = vita;
         }
-        if (debug)
-            Debug.Log($"Vita del nemico {nome} è di {this.vita}");
 
         //Setto livello
-        if (livello < 0)
-        {
-            this.livello = Mathf.Abs(livello);
-            Debug.LogWarning("Il livello non può essere negativo, verrà tolto il segno meno");
-        }
-        else if (livello == 0)
-        {
-            livello = 1;
-            Debug.LogWarning($"Vita di {nome} settato di default {livello}");
-        }
-        else
-        {
-            this.livello = livello;
-        }
-        if (debug)
-            Debug.Log($"Il livello del nemico {nome} è di {livello}");
+        this.livello = Mathf.Max(1, livello);
 
         //Setto attaccoBase
         attaccoBase = Random.Range(5, 10);
-        if (debug)
-            Debug.Log($"L'attacco del nemico {nome} è di {attaccoBase}");
-
-        if (debug)
-            Debug.Log("Fine Enemy - Inizializza");
-
+        
+        Debug.Log(@$"Enemy:
+                  - Nome {this.nome}
+                  - Vita {this.vita}
+                  - Livello {this.livello}
+                  - Attacco Base {this.attaccoBase}");
         return this;
     }
 
-    public int GetVita()
-    {
-        return vita;
-    }
+    public string GetNome() => nome;
 
-    public string GetNome()
-    {
-        return nome;
-    }
+    public int GetVita() => vita;
 
     public void SubisciDanno(int danno)
     {

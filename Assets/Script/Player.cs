@@ -3,18 +3,14 @@ using UnityEngine;
 //Classe con stile fluent
 public class Player
 {
-    private string nome = "NomeVuoto";
+    private string nome = "PlayerDefault";
     private int punteggio;
 
-    private int vita;
-    private int vitaDefult = 100;
-    private int livello;
-    private int attaccoBase;
+    private int vita = 100;
+    private int livello = 1;
+    private int attaccoBase = 5;
 
-    public string GetNome()
-    {
-        return nome;
-    }
+    public string GetNome() => nome;
 
     public Player SetNome(string nome)
     {
@@ -22,116 +18,53 @@ public class Player
         return this;
     }
 
-    public int GetPunteggio()
-    {
-        return punteggio;
-    }
+    public int GetPunteggio() => punteggio;
 
     public Player SetPunteggio(int punteggio)
     {
-        if (punteggio < 0)
-        {
-            this.punteggio = 0;
-        }
-        else
-        {
-            this.punteggio = punteggio;
-        }
+        this.punteggio = Mathf.Max(0, punteggio);
         return this;
     }
 
-    public void IncrementaPunteggio(int delta)
-    {
-        Mathf.Abs(delta);
-        punteggio += delta;
-    }
+    public void IncrementaPunteggio(int delta) => punteggio += Mathf.Abs(delta);
 
-    public void IncrementaPunteggio(int delta, bool flag)
+    public void IncrementaPunteggio(int delta, bool debug)
     {
-        if (flag)
+        if (debug)
             Debug.Log($"Punteggio di {nome} prima dell'incremento: {punteggio}");
-        Mathf.Abs(delta);
-        punteggio += delta;
-        if (flag)
+        IncrementaPunteggio(delta);
+        if (debug)
             Debug.Log($"Punteggio di {nome} dopo dell'incremento: {punteggio}");
     }
 
-    public bool IsVincitore()
-    {
-        return punteggio >= 100;
-    }
+    public bool IsVincitore() => punteggio >= 100;
 
-    public void GetDati()
-    {
-        Debug.Log($"Il Player {nome} ha un punteggio di {punteggio}");
-    }
+    public void GetDati() => Debug.Log($"Il Player {nome} ha un punteggio di {punteggio}");
 
-    public int GetVita()
-    {
-        return vita;
-    }
+    public int GetVita() => vita;
 
-    public Player SetVita(int valore)
+    public Player SetVita(int vita)
     {
-        if (valore < 0)
+        if (vita > 0)
         {
-            vita = Mathf.Abs(valore);
-        }
-        else if (valore == 0)
-        {
-            vita = vitaDefult;
-            Debug.LogWarning($"Vita di {nome} settato di default {vita}");
-        }
-        else
-        {
-            vita = valore;
+            this.vita = vita;
         }
         return this;
     }
 
-    public int GetLivello()
-    {
-        return livello;
-    }
+    public int GetLivello() => livello;
 
-    public Player SetLivello(int valore)
+    public Player SetLivello(int livello)
     {
-        if (valore < 0)
-        {
-            livello = Mathf.Abs(valore);
-        }
-        else if (valore == 0)
-        {
-            livello = 1;
-            Debug.LogWarning($"Livello di {nome} settato di default {livello}");
-        }
-        else
-        {
-            livello = valore;
-        }
+        this.livello = Mathf.Max(1, livello);
         return this;
     }
 
-    public int GetAttaccoBase()
-    {
-        return attaccoBase;
-    }
+    public int GetAttaccoBase() => attaccoBase;
 
     public Player SetAttaccoBase(int attacco)
     {
-        if (attacco < 0)
-        {
-            attaccoBase = Mathf.Abs(attacco);
-        }
-        else if (attacco == 0)
-        {
-            attaccoBase = 10;
-            Debug.LogWarning($"Attacco di {nome} settato di default {attacco}");
-        }
-        else
-        {
-            attaccoBase = attacco;
-        }
+        this.attaccoBase = Mathf.Max(10, attacco);
         return this;
     }
 

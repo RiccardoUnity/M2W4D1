@@ -16,11 +16,10 @@ public class Esercizio4 : MonoBehaviour
             .SetNome("Goku")
             .SetPunteggio(10)
             .SetVita(200)
-            .SetLivello(2)
+            .SetLivello(3)
             .SetAttaccoBase(10);
 
-        enemy.debug = false;
-        enemy.Inizializza("Saiban", 50, 1);
+        enemy.Inizializza("Saiban", 50, 2);
 
         Time.fixedDeltaTime = 0.5f;
     }
